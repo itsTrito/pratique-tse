@@ -1,16 +1,27 @@
 import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
-import { RecipeModule } from "./recipes/recipe.module";
+import { join } from "path";
+import { DateResolver, DateTimeResolver } from "graphql-scalars";
+import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
-    RecipeModule,
+    UserModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      installSubscriptionHandlers: true,
-      autoSchemaFile: true,
-      sortSchema: true,
+      typePaths: ["./**/*.gql"],
+      definitions: {
+        path: join(process.cwd(), "src/graphql.schema.ts"),
+        outputAs: "class",
+        customScalarTypeMapping: {
+          DateTime: "Date",
+        },
+      },
+      resolvers: {
+        Date: DateResolver,
+        DateTime: DateTimeResolver,
+      },
     }),
   ],
 })
