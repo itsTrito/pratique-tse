@@ -8,6 +8,18 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class Recipe {
+    id: string;
+    title: string;
+    description: string;
+    ingredients: string[];
+    steps: string[];
+    user: User;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+    deletedAt?: Nullable<DateTime>;
+}
+
 export abstract class IQuery {
     abstract users(): User[] | Promise<User[]>;
 
