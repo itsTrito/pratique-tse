@@ -1,0 +1,22 @@
+type GrocerieListItem {
+    id: ID!
+    title: String!
+    quantity: Int!
+    unit: String
+    bought: Boolean!
+    category: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input CreateGroceryDto {
+    title: String!
+    quantity: Int!
+}
+
+input UpdateGroceryDto {
+    title: String
+    quantity: Int
+    bought: Boolean
+}

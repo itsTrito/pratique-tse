@@ -4,4 +4,12 @@ scalar DateTime
 type Query {
     users: [User!]!
     sayHello: String!
+    groceries: [GrocerieListItem!]!
+    grocery(id: ID!): GrocerieListItem!
+}
+
+type Mutation {
+    createGrocery(dto: CreateGroceryDto!): GrocerieListItem!
+    updateGrocery(id: ID!, dto: UpdateGroceryDto!): GrocerieListItem!
+    deleteGrocery(id: ID!): GrocerieListItem!
 }

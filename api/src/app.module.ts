@@ -4,10 +4,12 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
 import { DateResolver, DateTimeResolver } from "graphql-scalars";
 import { UserModule } from "./user/user.module";
+import { GrocerieModule } from "./groceries/grocerie.module";
 
 @Module({
   imports: [
     UserModule,
+    GrocerieModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ["./**/*.gql"],
