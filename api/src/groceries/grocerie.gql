@@ -1,4 +1,4 @@
-type GrocerieListItem {
+type GroceryListItem {
     id: ID!
     title: String!
     quantity: Int!

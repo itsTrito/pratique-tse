@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import TaskApp from "./Tasks";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -16,7 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <App />
+      <TaskApp />
     </React.StrictMode>
   </ApolloProvider>,
 );

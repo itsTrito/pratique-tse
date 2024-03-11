@@ -5,7 +5,7 @@ import { Checkbox, TextField } from "@mui/material";
 
 const GET_GROCERIES = gql`
   query {
-    groceries {
+    findAllGroceries {
       id
       title
       quantity
@@ -59,7 +59,6 @@ function AddGrocery() {
           e.preventDefault();
           addItem({ variables: { dto: { title: input.value, quantity: 1 } } });
           input.value = "";
-          window.location.reload();
         }}
       >
         <TextField inputRef={(node) => (input = node)} />
@@ -71,6 +70,7 @@ function AddGrocery() {
 
 function Groceries() {
   const { loading, error, data } = useQuery(GET_GROCERIES);
+  const [updateItem, _] = useMutation(UPDATE_ITEM);
 
   console.log(data);
 
@@ -79,7 +79,9 @@ function Groceries() {
   if (!!data.groceries && data.groceries.length > 0) {
     return (
       <div>
-        {data.groceries.map((grocery: any) => ControlledCheckbox(grocery))}
+        {data.groceries.map((grocery: any) =>
+          ControlledCheckbox(grocery, updateItem),
+        )}
       </div>
     );
   } else {
@@ -87,9 +89,8 @@ function Groceries() {
   }
 }
 
-function ControlledCheckbox(groceryItem: any) {
+function ControlledCheckbox(groceryItem: any, updateItem: any) {
   const [checked, setChecked] = React.useState(groceryItem.bought);
-  const [updateItem] = useMutation(UPDATE_ITEM);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -99,15 +100,7 @@ function ControlledCheckbox(groceryItem: any) {
     <div id={groceryItem.id}>
       <Checkbox
         checked={checked}
-        onChange={(event, checked) => {
-          groceryItem({
-            variables: {
-              id: groceryItem.id,
-              dto: { bought: checked },
-            },
-          });
-          //window.location.reload();
-        }}
+        onChange={(event, checked) => handleChange(event)}
       />
       <span>{groceryItem.title}</span>
     </div>

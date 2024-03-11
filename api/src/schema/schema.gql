@@ -2,14 +2,21 @@ scalar Date
 scalar DateTime
 
 type Query {
-    users: [User!]!
-    sayHello: String!
-    groceries: [GrocerieListItem!]!
-    grocery(id: ID!): GrocerieListItem!
+    findAllUsers: [User!]!
+    findAllGroceries: [GroceryListItem!]!
+    findGroceriesByTitle(title: String!): [GroceryListItem!]!
+    findGroceryById(id: ID!): GroceryListItem!
 }
 
 type Mutation {
-    createGrocery(dto: CreateGroceryDto!): GrocerieListItem!
-    updateGrocery(id: ID!, dto: UpdateGroceryDto!): GrocerieListItem!
-    deleteGrocery(id: ID!): GrocerieListItem!
+    login(dto: AuthDto!): ID!
+    signup(dto: AuthDto!): ID!
+    createGrocery(dto: CreateGroceryDto!): GroceryListItem!
+    updateGrocery(id: ID!, dto: UpdateGroceryDto!): GroceryListItem!
+    deleteGrocery(id: ID!): GroceryListItem!
+}
+
+input AuthDto {
+    email: String!
+    password: String!
 }
